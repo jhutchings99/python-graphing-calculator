@@ -171,7 +171,9 @@ def main():
     + (addition), - (subtraction), * (multiplication),
      / (division), x (variable) and ( ) in your equation.
      Example 1: 2x^2 + 3x - 4
-     Example 2: s(x) + c(x)""")
+     Example 2: s(x) + c(x)
+     Example 3: tx^4
+     Example 4: x/2+sx""")
     directions_text.setSize(13)
     directions_text.setFace("arial")
     directions_text.setTextColor("white")
