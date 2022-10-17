@@ -158,9 +158,25 @@ def main():
     clear_button = Rectangle(Point(XLOW - 10, YLOW + 1), Point(XLOW, YLOW + 2))
     clear_button.setFill("blue")
     clear_button.draw(win)
-    clear_text = Text(Point(XLOW - 5, YLOW + 1.5), "CLEAR")
+    clear_text = Text(Point(XLOW - 5, YLOW + 1.5), "CLEAR BOTH EQUATIONS")
     clear_text.setTextColor("white")
     clear_text.draw(win)
+
+    #Create a clear button to clear the second function
+    clear2_button = Rectangle(Point(XLOW - 10, YLOW + 2), Point(XLOW, YLOW + 3))
+    clear2_button.setFill("blue")
+    clear2_button.draw(win)
+    clear2_text = Text(Point(XLOW - 5, YLOW + 2.5), "CLEAR SECOND EQUATION")
+    clear2_text.setTextColor("white")
+    clear2_text.draw(win)
+
+    # Create a clear button to clear the first function
+    clear1_button = Rectangle(Point(XLOW - 10, YLOW + 3), Point(XLOW, YLOW + 4))
+    clear1_button.setFill("blue")
+    clear1_button.draw(win)
+    clear1_text = Text(Point(XLOW - 5, YLOW + 3.5), "CLEAR FIRST EQUATION")
+    clear1_text.setTextColor("white")
+    clear1_text.draw(win)
 
     # Create text below the title to tell the user what to do
     directions_text = Text(Point(XLOW - 5, YHIGH - 4), 
@@ -215,6 +231,7 @@ def main():
             equation = entry_box1.getText()
             postfix = infix_to_postfix(equation)
             x = XLOW
+            line_list1 = []
             while x <= XHIGH:
                 y = evaluate_postfix(postfix, x)
                 x2 = x + XINC
@@ -223,6 +240,7 @@ def main():
                 line.setWidth(2)
                 line.setOutline("red")
                 line.draw(win)
+                line_list1.append(line)
                 x += XINC
 
         # Graph the second equation if the second graph button is clicked and the entry box is not empty
@@ -230,6 +248,7 @@ def main():
             equation = entry_box2.getText()
             postfix = infix_to_postfix(equation)
             x = XLOW
+            line_list2 = []
             while x <= XHIGH:
                 y = evaluate_postfix(postfix, x)
                 x2 = x + XINC
@@ -238,12 +257,29 @@ def main():
                 line.setWidth(2)
                 line.setOutline("blue")
                 line.draw(win)
+                line_list2.append(line)
                 x += XINC
+
+        # Clear the first equation if the first clear button is clicked
+        if click.getX() >= XLOW - 10 and click.getX() <= XLOW and click.getY() >= YLOW + 3 and click.getY() <= YLOW + 4:
+            for line in line_list1:
+                line.undraw()
+            line_list1 = []
+
+        # Clear the second equation if the second clear button is clicked
+        if click.getX() >= XLOW - 10 and click.getX() <= XLOW and click.getY() >= YLOW + 2 and click.getY() <= YLOW + 3:
+            for line in line_list2:
+                line.undraw()
+            line_list2 = []
 
         # Clear the graph if the clear button is clicked
         if click.getX() >= XLOW - 10 and click.getX() <= XLOW and click.getY() >= YLOW + 1 and click.getY() <= YLOW + 2:
-            win.close()
-            main()
+            for line in line_list2:
+                line.undraw()
+            line_list2 = []
+            for line in line_list1:
+                line.undraw()
+            line_list1 = []
 
         # Quit the program if the quit button is clicked
         if click.getX() >= XLOW - 10 and click.getX() <= XLOW and click.getY() >= YLOW and click.getY() <= YLOW + 1:
